@@ -6,6 +6,11 @@ from . import linear_assignment
 from . import iou_matching
 from .track import Track
 
+class ObjectTrack(Track):
+    def __init__(self, mean, covariance, track_id, n_init, max_age,
+                 feature=None, name = None):
+        super().__init__(mean, covariance, track_id, n_init, max_age, feature)
+        self.name = name
 
 class Tracker:
     """
