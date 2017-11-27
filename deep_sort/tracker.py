@@ -16,7 +16,7 @@ class ObjectTrack(Track):
 
     def update(self, kf, detection):
         super().update(kf, detection)
-        self.pts.append(self.mean)
+        self.pts.append(self.mean[:2])
 
 class Tracker:
     """
