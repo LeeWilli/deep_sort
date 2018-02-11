@@ -147,3 +147,24 @@ class Tracker:
             mean, covariance, self._next_id, self.n_init, self.max_age,
             detection.feature, mess))
         self._next_id += 1
+
+class ObjectTracker(Tracker):
+    def __init__(self, metric, max_iou_distance=0.7, max_age=30, n_init=3):
+        super().__init__(metric, max_iou_distance, max_age, n_init)
+
+    def get_person_boxes(self):
+        ret = {}
+        for track in self.tracks:
+            if track.mess in ('person',):
+                ret[track.track_id] = track.to_tlbr()
+        return ret
+
+    def get_track_items(self):
+        bboxes = []
+        names = []
+        track_pts = []
+        for track in self.tracks:
+            bboxes.append(track.to_tlbr())
+            names.append(track.name)
+            track_pts.append(track.pts)
+        return bboxes, names, track_pts
